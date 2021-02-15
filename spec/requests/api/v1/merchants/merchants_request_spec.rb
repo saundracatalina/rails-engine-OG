@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Merchants', type: :request do
-  it 'sends a list of merchants' do
+  it 'sends a list of all merchants' do
     create_list(:merchant, 3)
 
     get api_v1_merchants_path

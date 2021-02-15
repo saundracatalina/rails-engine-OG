@@ -4,7 +4,7 @@ describe 'Merchants API request' do
   it 'sends a list of merchants' do
     create_list(:merchant, 3)
 
-    get '/api/v1/merchants'
+    get api_v1_merchants_path
 
     expect(response).to be_successful
   end

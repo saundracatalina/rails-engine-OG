@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Merchants API request' do
+describe 'Merchants', type: :request do
   it 'sends a list of merchants' do
     create_list(:merchant, 3)
 

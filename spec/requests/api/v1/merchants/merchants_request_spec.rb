@@ -7,6 +7,7 @@ describe 'Merchants', type: :request do
     get api_v1_merchants_path
 
     expect(response).to be_successful
+    expect(response.status).to eq(200)
 
     merchants = JSON.parse(response.body, symbolize_names: true)
 

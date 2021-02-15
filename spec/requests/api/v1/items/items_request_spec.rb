@@ -7,6 +7,7 @@ describe 'Items', type: :request do
     get api_v1_items_path
 
     expect(response).to be_successful
+    expect(response.status).to eq(200)
 
     items = JSON.parse(response.body, symbolize_names: true)
 

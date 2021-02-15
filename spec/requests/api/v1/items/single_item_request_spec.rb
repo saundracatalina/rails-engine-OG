@@ -10,6 +10,7 @@ describe 'Items', type: :request do
     item_json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_successful
+    expect(response.status).to eq(200)
 
     expect(item_json).to have_key(:id)
     expect(item_json[:id]).to be_an(Integer)
@@ -21,6 +22,6 @@ describe 'Items', type: :request do
     expect(item_json).to have_key(:unit_price)
     expect(item_json[:unit_price]).to be_a(Float)
     expect(item_json).to have_key(:merchant_id)
-    expect(item_json[:merchant_id]).to be_an(Integer)    
+    expect(item_json[:merchant_id]).to be_an(Integer)
   end
 end

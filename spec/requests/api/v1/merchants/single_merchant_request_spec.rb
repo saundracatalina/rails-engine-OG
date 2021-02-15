@@ -9,6 +9,7 @@ describe 'Merchants', type: :request do
     merchant_json = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_successful
+    expect(response.status).to eq(200)
 
     expect(merchant_json).to have_key(:id)
     expect(merchant_json[:id]).to be_an(Integer)

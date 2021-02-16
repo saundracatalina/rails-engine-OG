@@ -17,4 +17,9 @@ describe 'Merchants', type: :request do
     expect(merchant_json).to have_key(:name)
     expect(merchant_json[:name]).to be_a(String)
   end
+  it 'fails with 404 if merchant does not exist' do
+    get api_v1_merchant_path(999999)
+
+    expect(response.status).to eq(404)
+  end
 end

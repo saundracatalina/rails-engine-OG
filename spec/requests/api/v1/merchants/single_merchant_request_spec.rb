@@ -22,4 +22,10 @@ describe 'Merchants', type: :request do
 
     expect(response.status).to eq(404)
   end
+  it 'fails with 404 if merchant id sent as string' do
+    merchant_id = create(:merchant).id
+    get api_v1_merchant_path("merchant_id")
+
+    expect(response.status).to eq(404)
+  end
 end

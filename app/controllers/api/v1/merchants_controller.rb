@@ -4,7 +4,7 @@ class Api::V1::MerchantsController< ApplicationController
   end
   def show
     begin
-      render json: Merchant.find(params[:id])
+      render json: Merchant.find(params[:id]) 
     rescue ActiveRecord::RecordNotFound => error
       render json: {error: error.to_s}, status: :not_found
     end

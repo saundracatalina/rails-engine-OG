@@ -3,6 +3,10 @@ class Api::V1::ItemsController< ApplicationController
     render json: ItemSerializer.new(Item.all)
   end
   def show
-    render json: ItemSerializer.new(Item.find(params[:id]))
+    begin
+      render json: ItemSerializer.new(Item.find(params[:id]))
+    rescue ActiveRecord::RecordNotFound => error
+      render json: {error: error.to_s}, status: :not_found
+    end
   end
 end

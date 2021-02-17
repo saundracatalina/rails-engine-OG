@@ -23,7 +23,4 @@ describe 'Merchants', type: :request do
       expect(merchant[:attributes]).to_not have_key(:invoices)
     end
   end
-  it 'returns an array of data even if 1 resource is found'
-  it 'returns an array of data even if no resources are found'
-
 end

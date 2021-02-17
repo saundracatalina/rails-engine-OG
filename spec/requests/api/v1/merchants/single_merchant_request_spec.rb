@@ -4,6 +4,7 @@ describe 'Merchants', type: :request do
   it 'can get one merchant back by its id' do
     merchant = create(:merchant)
     id = merchant.id
+
     get api_v1_merchant_path(merchant)
 
     json = JSON.parse(response.body, symbolize_names: true)

@@ -19,6 +19,11 @@ describe 'Merchants', type: :request do
       expect(merchant[:id]).to be_an(String)
       expect(merchant[:attributes]).to have_key(:name)
       expect(merchant[:attributes][:name]).to be_a(String)
+      expect(merchant[:attributes]).to_not have_key(:items)
+      expect(merchant[:attributes]).to_not have_key(:invoices)
     end
   end
+  it 'returns an array of data even if 1 resource is found'
+  it 'returns an array of data even if no resources are found'
+
 end

@@ -6,16 +6,17 @@ describe 'Merchants', type: :request do
     id = merchant.id
     get api_v1_merchant_path(merchant)
 
-    merchant_json = JSON.parse(response.body, symbolize_names: true)
+    json = JSON.parse(response.body, symbolize_names: true)
+    merchant = json[:data]
 
     expect(response).to be_successful
     expect(response.status).to eq(200)
 
-    expect(merchant_json).to have_key(:id)
-    expect(merchant_json[:id]).to be_an(Integer)
-    expect(merchant_json[:id]).to eq(id)
-    expect(merchant_json).to have_key(:name)
-    expect(merchant_json[:name]).to be_a(String)
+    expect(merchant).to have_key(:id)
+    expect(merchant[:id]).to be_an(String)
+    expect(merchant[:id]).to eq("#{id}")
+    expect(merchant[:attributes]).to have_key(:name)
+    expect(merchant[:attributes][:name]).to be_a(String)
   end
   it 'fails with 404 if merchant does not exist' do
     get api_v1_merchant_path(999999)

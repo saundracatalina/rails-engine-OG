@@ -63,4 +63,9 @@ describe 'Items', type: :request do
 
     expect(response.status).to eq(404)
   end
+  it 'returns a 404 if item id passed in as string' do
+    get api_v1_item_merchant_index_path("9999999")
+
+    expect(response.status).to eq(404)
+  end
 end

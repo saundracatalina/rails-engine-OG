@@ -58,4 +58,9 @@ describe 'Items', type: :request do
     expect(merchant_data[:attributes][:name]).to be_a(String)
     expect(merchant_data[:attributes][:name]).to eq(merchant.name)
   end
+  it 'returns a 404 if item not found' do
+    get api_v1_item_merchant_index_path(9999999)
+
+    expect(response.status).to eq(404)
+  end
 end

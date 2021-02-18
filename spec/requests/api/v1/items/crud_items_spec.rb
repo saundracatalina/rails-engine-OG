@@ -13,6 +13,8 @@ describe 'Items', type: :request do
 
     post '/api/v1/items', headers: headers, params: JSON.generate(item: item_params)
     created_item = Item.last
+    json = JSON.parse(response.body, symbolize_names: true)
+    item = json[:data]
 
     expect(response).to be_successful
     expect(response.status).to eq(201)
@@ -23,5 +25,17 @@ describe 'Items', type: :request do
   end
   it 'throws an error if any attributes are missing'
   it 'ignores any extra attributes sent in request that are not allowed'
-  it 'can '
+  it 'can update an existing item' do
+    id = create(:item).id
+    former_name = Item.last.name
+    item_params = { name: "The bestest item ever" }
+    headers = {'CONTENT_TYPE' => 'application/json'}
+
+    patch "/api/v1/items/#{id}", headers: headers, params: JSON.generate({item: item_params})
+    item = Item.find_by(id: id)
+
+    expect(response).to be_successful
+    expect(item.name).to_not eq(former_name)
+    expect(item.name).to eq("The bestest item ever")
+  end
 end

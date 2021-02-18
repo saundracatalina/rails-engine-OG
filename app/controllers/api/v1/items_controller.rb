@@ -20,6 +20,9 @@ class Api::V1::ItemsController< ApplicationController
       render json: {error: error.to_s}, status: :not_found
     end
   end
+  def destroy
+    Item.destroy(params[:id])
+  end
 
   private
   def item_params

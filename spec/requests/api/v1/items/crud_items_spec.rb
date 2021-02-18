@@ -18,10 +18,10 @@ describe 'Items', type: :request do
 
     expect(response).to be_successful
     expect(response.status).to eq(201)
-    expect(created_item.name).to eq(item_params[:name])
-    expect(created_item.description).to eq(item_params[:description])
-    expect(created_item.unit_price).to eq(item_params[:unit_price])
-    expect(created_item.merchant_id).to eq(item_params[:merchant_id])
+    expect(item[:attributes][:name]).to eq(item_params[:name])
+    expect(item[:attributes][:description]).to eq(item_params[:description])
+    expect(item[:attributes][:unit_price]).to eq(item_params[:unit_price])
+    expect(item[:attributes][:merchant_id]).to eq(item_params[:merchant_id])
   end
   it 'throws an error if any attributes are missing'
   it 'ignores any extra attributes sent in request that are not allowed'
@@ -33,9 +33,14 @@ describe 'Items', type: :request do
 
     patch "/api/v1/items/#{id}", headers: headers, params: JSON.generate({item: item_params})
     item = Item.find_by(id: id)
+    json = JSON.parse(response.body, symbolize_names: true)
+    item_json = json[:data]
 
     expect(response).to be_successful
+    expect(response.status).to eq(200)
     expect(item.name).to_not eq(former_name)
     expect(item.name).to eq("The bestest item ever")
+    expect(item_json[:attributes][:name]).to eq("The bestest item ever")
+    expect(item_json[:attributes][:name]).to_not eq(former_name)
   end
 end

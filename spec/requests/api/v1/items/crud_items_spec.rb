@@ -37,7 +37,7 @@ describe 'Items', type: :request do
     item_json = json[:data]
 
     expect(response).to be_successful
-    expect(response.status).to eq(200)
+    expect(response.status).to eq(202)
     expect(item.name).to_not eq(former_name)
     expect(item.name).to eq("The bestest item ever")
     expect(item_json[:attributes][:name]).to eq("The bestest item ever")
@@ -63,12 +63,16 @@ describe 'Items', type: :request do
 
     expect(response.status).to eq(404)
   end
-  xit 'throws a 404 error when given a bad merchant id for a patch' do
-    id = create(:item).id
-    item_params = { merchant_id: 99999 }
+  it 'throws a 404 error when given a bad merchant id for a patch' do
+    item = create(:item)
+    item_id = item.id
+    assoc_merch = item.merchant_id
+    fake_merch_id = 99999
+
+    item_params = { merchant_id: fake_merch_id }
     headers = {'CONTENT_TYPE' => 'application/json'}
 
-    patch "/api/v1/items/#{id}", headers: headers, params: JSON.generate({item: item_params})
+    patch "/api/v1/items/#{item_id}", headers: headers, params: JSON.generate({item: item_params})
 
     expect(response.status).to eq(404)
   end

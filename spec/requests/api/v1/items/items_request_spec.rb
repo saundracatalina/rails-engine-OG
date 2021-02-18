@@ -27,4 +27,19 @@ describe 'Items', type: :request do
       expect(item[:attributes][:merchant_id]).to be_an(Integer)
     end
   end
+  it 'sends a list based on per_page and page num request' do
+    item_1 = create(:item)
+    item_2 = create(:item)
+    item_3 = create(:item)
+    item_4 = create(:item)
+
+    get '/api/v1/items?per_page=2&page=2'
+
+    json = JSON.parse(response.body, symbolize_names: true)
+    items = json[:data]
+
+    expect(items[0][:attributes][:name]).to eq(item_3.name)
+    expect(items[1][:attributes][:name]).to eq(item_4.name)
+    expect(items.count).to eq(2)
+  end
 end

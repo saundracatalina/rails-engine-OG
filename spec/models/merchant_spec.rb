@@ -11,4 +11,55 @@ describe Merchant, type: :model do
     it { should have_many(:customers).through(:invoices) }
     it { should have_many(:transactions).through(:invoices) }
   end
+  describe 'class methods' do
+    describe 'paginate' do
+      it 'can take user input for per page query param' do
+        merchant_1 = create(:merchant)
+        merchant_2 = create(:merchant)
+        merchant_3 = create(:merchant)
+        data = Merchant.paginate(2, nil)
+
+        expect(data).to eq([merchant_1, merchant_2])
+      end
+      it 'returns an array even if only 1 resource is found & per_page query is larger than number of existing records' do
+        merchant_1 = create(:merchant)
+
+        data = Merchant.paginate(2, nil)
+
+        expect(data).to eq([merchant_1])
+      end
+      it 'returns an empty array even if no resources are found' do
+        data = Merchant.paginate(5, nil)
+
+        expect(data).to eq([])
+      end
+      it 'defaults to 20 resources per page if not specified by user' do
+        create_list(:merchant, 25)
+
+        data = Merchant.paginate(nil, nil)
+
+        expect(data.size).to eq(20)
+      end
+      it 'defaults to page 1 if not specified by user' do
+        merchant_1 = create(:merchant)
+        merchant_2 = create(:merchant)
+        merchant_3 = create(:merchant)
+        merchant_4 = create(:merchant)
+
+        data = Merchant.paginate(3, nil)
+
+        expect(data).to eq([merchant_1, merchant_2, merchant_3])
+      end
+      it 'can take user input of a page of resources to skip before returning data' do
+        merchant_1 = create(:merchant)
+        merchant_2 = create(:merchant)
+        merchant_3 = create(:merchant)
+        merchant_4 = create(:merchant)
+
+        data = Merchant.paginate(2, 2)
+
+        expect(data).to eq([merchant_3, merchant_4])
+      end
+    end
+  end
 end

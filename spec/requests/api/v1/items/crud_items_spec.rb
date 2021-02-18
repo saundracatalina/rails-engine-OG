@@ -43,4 +43,33 @@ describe 'Items', type: :request do
     expect(item_json[:attributes][:name]).to eq("The bestest item ever")
     expect(item_json[:attributes][:name]).to_not eq(former_name)
   end
+  it 'throws a 404 error when id entered for a patch is a string' do
+    id = create(:item).id
+    former_name = Item.last.name
+    item_params = { name: "The bestest item ever" }
+    headers = {'CONTENT_TYPE' => 'application/json'}
+
+    patch "/api/v1/items/'#{id}'", headers: headers, params: JSON.generate({item: item_params})
+    item = Item.find_by(id: id)
+
+    expect(item.name).to eq(former_name)
+    expect(response.status).to eq(404)
+  end
+  it 'throws a 404 error when an id that does not exist is entered for a patch' do
+    item_params = { name: "The bestest item ever" }
+    headers = {'CONTENT_TYPE' => 'application/json'}
+
+    patch "/api/v1/items/99999", headers: headers, params: JSON.generate({item: item_params})
+
+    expect(response.status).to eq(404)
+  end
+  xit 'throws a 404 error when given a bad merchant id' do
+    id = create(:item).id
+    item_params = { merchant_id: 99999 }
+    headers = {'CONTENT_TYPE' => 'application/json'}
+
+    patch "/api/v1/items/#{id}", headers: headers, params: JSON.generate({item: item_params})
+
+    expect(response.status).to eq(404)
+  end
 end

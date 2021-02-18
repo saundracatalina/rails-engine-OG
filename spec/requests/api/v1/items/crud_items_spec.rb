@@ -63,7 +63,7 @@ describe 'Items', type: :request do
 
     expect(response.status).to eq(404)
   end
-  xit 'throws a 404 error when given a bad merchant id' do
+  xit 'throws a 404 error when given a bad merchant id for a patch' do
     id = create(:item).id
     item_params = { merchant_id: 99999 }
     headers = {'CONTENT_TYPE' => 'application/json'}
@@ -72,4 +72,15 @@ describe 'Items', type: :request do
 
     expect(response.status).to eq(404)
   end
+  it 'can destroy an item(if found)' do
+    id = create(:item).id
+
+    expect(Item.count).to eq(1)
+
+    delete "/api/v1/items/#{id}"
+
+    expect(response.status).to eq(204)
+    expect(Item.count).to eq(0)
+  end
+  it 'can destroy an item(if found) and any associated data'
 end

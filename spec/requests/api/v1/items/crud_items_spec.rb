@@ -15,9 +15,13 @@ describe 'Items', type: :request do
     created_item = Item.last
 
     expect(response).to be_successful
+    expect(response.status).to eq(201)
     expect(created_item.name).to eq(item_params[:name])
     expect(created_item.description).to eq(item_params[:description])
     expect(created_item.unit_price).to eq(item_params[:unit_price])
     expect(created_item.merchant_id).to eq(item_params[:merchant_id])
   end
+  it 'throws an error if any attributes are missing'
+  it 'ignores any extra attributes sent in request that are not allowed'
+  it 'can '
 end

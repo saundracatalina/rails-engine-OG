@@ -64,7 +64,10 @@ describe 'Items', type: :request do
     expect(response.status).to eq(404)
   end
   xit 'throws a 404 error when given a bad merchant id for a patch' do
-    id = create(:item).id
+    item = create(:item)
+    item_id = item.id
+    assoc_merch = item.merchant_id
+    require "pry"; binding.pry
     item_params = { merchant_id: 99999 }
     headers = {'CONTENT_TYPE' => 'application/json'}
 

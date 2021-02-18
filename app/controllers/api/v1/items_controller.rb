@@ -3,6 +3,7 @@ class Api::V1::ItemsController< ApplicationController
     items = Item.paginate(params[:per_page], params[:page])
     render json: ItemSerializer.new(items)
   end
+
   def show
     begin
       render json: ItemSerializer.new(Item.find(params[:id]))
@@ -10,16 +11,22 @@ class Api::V1::ItemsController< ApplicationController
       render json: {error: error.to_s}, status: :not_found
     end
   end
+
   def create
     render json: ItemSerializer.new(Item.create(item_params)), status: :created
   end
+
   def update
     begin
-      render json: ItemSerializer.new(Item.update(params[:id], item_params))
-    rescue ActiveRecord::RecordNotFound => error
+      item = Item.find(params[:id])
+      item.update!(item_params)
+      render json: ItemSerializer.new(item), status: :accepted
+    rescue
+      error = ActiveRecord::RecordNotFound
       render json: {error: error.to_s}, status: :not_found
     end
   end
+  
   def destroy
     Item.destroy(params[:id])
   end

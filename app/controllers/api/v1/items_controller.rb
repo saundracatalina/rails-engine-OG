@@ -14,7 +14,11 @@ class Api::V1::ItemsController< ApplicationController
     render json: ItemSerializer.new(Item.create(item_params)), status: :created
   end
   def update
-    render json: ItemSerializer.new(Item.update(params[:id], item_params))
+    begin
+      render json: ItemSerializer.new(Item.update(params[:id], item_params))
+    rescue ActiveRecord::RecordNotFound => error
+      render json: {error: error.to_s}, status: :not_found
+    end
   end
 
   private

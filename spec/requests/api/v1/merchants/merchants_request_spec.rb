@@ -23,4 +23,19 @@ describe 'Merchants', type: :request do
       expect(merchant[:attributes]).to_not have_key(:invoices)
     end
   end
+  it 'sends a list based on per_page and page num request' do
+    merchant_1 = create(:merchant)
+    merchant_2 = create(:merchant)
+    merchant_3 = create(:merchant)
+    merchant_4 = create(:merchant)
+
+    get '/api/v1/merchants?per_page=2&page=2'
+
+    json = JSON.parse(response.body, symbolize_names: true)
+    merchants = json[:data]
+
+    expect(merchants[0][:attributes][:name]).to eq(merchant_3.name)
+    expect(merchants[1][:attributes][:name]).to eq(merchant_4.name)
+    expect(merchants.count).to eq(2)
+  end
 end

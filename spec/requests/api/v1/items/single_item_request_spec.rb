@@ -36,4 +36,26 @@ describe 'Items', type: :request do
 
     expect(response.status).to eq(404)
   end
+  it 'returns the merchant associated with a specific item' do
+    merchant = create(:merchant)
+    item = Item.create!(name: "spoon",
+                        description: "good for scooping",
+                        unit_price: 1.99,
+                        merchant_id: merchant.id)
+    get api_v1_item_merchant_index_path(item)
+
+    json = JSON.parse(response.body, symbolize_names: true)
+    merchant_data = json[:data]
+
+    expect(merchant_data).to have_key(:id)
+    expect(merchant_data[:id]).to be_a(String)
+    expect(merchant_data[:id].to_i).to eq(merchant.id)
+    expect(merchant_data).to have_key(:type)
+    expect(merchant_data[:type]).to be_a(String)
+    expect(merchant_data).to have_key(:attributes)
+    expect(merchant_data[:attributes]).to be_a(Hash)
+    expect(merchant_data[:attributes]).to have_key(:name)
+    expect(merchant_data[:attributes][:name]).to be_a(String)
+    expect(merchant_data[:attributes][:name]).to eq(merchant.name)
+  end
 end

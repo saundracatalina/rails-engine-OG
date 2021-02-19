@@ -74,5 +74,33 @@ describe Merchant, type: :model do
         expect(data).to_not eq(merchant_2)
       end
     end
+    describe 'top_merch_revenue' do
+      it 'returns merchants with top revenue in desc order' do
+        merchant_1 = create(:merchant)
+        merchant_2 = create(:merchant)
+        merchant_3 = create(:merchant)
+
+        item_1 = create(:item, merchant: merchant_1)
+        item_2 = create(:item, merchant: merchant_2)
+        item_3 = create(:item, merchant: merchant_3)
+
+        invoice_1 = create(:invoice, merchant: merchant_1, status: 'shipped')
+        invoice_2 = create(:invoice, merchant: merchant_2, status: 'shipped')
+        invoice_3 = create(:invoice, merchant: merchant_3, status: 'shipped')
+
+        create(:invoice_item, invoice: invoice_1, item: item_1, quantity: 10, unit_price: 10000)
+        create(:invoice_item, invoice: invoice_2, item: item_2, quantity: 10, unit_price: 1000)
+        create(:invoice_item, invoice: invoice_3, item: item_3, quantity: 10, unit_price: 100)
+
+        create(:transaction, invoice: invoice_1, result: 'success')
+        create(:transaction, invoice: invoice_2, result: 'success')
+        create(:transaction, invoice: invoice_3, result: 'success')
+
+        limit = 2
+        data = Merchant.top_merch_revenue(limit)
+
+        expect(data).to eq([merchant_1, merchant_2])
+      end
+    end
   end
 end

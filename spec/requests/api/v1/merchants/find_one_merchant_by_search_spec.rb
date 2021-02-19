@@ -28,5 +28,4 @@ describe 'Find One Merchant', type: :request do
     json = JSON.parse(response.body, symbolize_names: true)
     expect(json).to be_an(Object)
   end
-  it 'sad path-no fragment given'
 end

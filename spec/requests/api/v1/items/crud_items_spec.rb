@@ -23,8 +23,6 @@ describe 'Items', type: :request do
     expect(item[:attributes][:unit_price]).to eq(item_params[:unit_price])
     expect(item[:attributes][:merchant_id]).to eq(item_params[:merchant_id])
   end
-  it 'throws an error if any attributes are missing'
-  it 'ignores any extra attributes sent in request that are not allowed'
   it 'can update an existing item' do
     id = create(:item).id
     former_name = Item.last.name
@@ -86,5 +84,4 @@ describe 'Items', type: :request do
     expect(response.status).to eq(204)
     expect(Item.count).to eq(0)
   end
-  it 'can destroy an item(if found) and any associated data'
 end

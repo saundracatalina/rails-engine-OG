@@ -17,4 +17,13 @@ class Merchant < ApplicationRecord
   def self.merch_search(name_key, search_fragment)
     find_by("LOWER(#{name_key}) LIKE LOWER('%#{search_fragment}%')")
   end
+
+  def self.top_merch_revenue(limit)
+    joins(invoices: [:invoice_items, :transactions])
+    .where(transactions: { result: 'success' }, invoices: { status: 'shipped' })
+    .select('merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS total_revenue')
+    .group(:id)
+    .order('total_revenue DESC')
+    .limit(limit)
+  end
 end

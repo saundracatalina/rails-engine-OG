@@ -1,4 +1,4 @@
-class Api::V1::MerchantsController< ApplicationController
+class Api::V1::MerchantsController < ApplicationController
   def index
     merchants = Merchant.paginate(params[:per_page], params[:page])
     render json: MerchantSerializer.new(merchants)
@@ -25,15 +25,4 @@ class Api::V1::MerchantsController< ApplicationController
   def search_fragment
     params[:name]
   end
-  # def name_key
-  #   merchant_params.keys[0]
-  # end
-  #
-  # def search_fragment
-  #   merchant_params[:name]
-  # end
-  #
-  # def merchant_params
-  #   params.permit(:name)
-  # end
 end

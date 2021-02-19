@@ -22,6 +22,11 @@ describe 'Find One Merchant', type: :request do
     expect(merchant[:attributes][:name]).to eq(merchant_1.name)
     expect(merchant[:attributes][:name]).to_not eq(merchant_2.name)
   end
-  it 'sad path-no fragment matched'
+  it 'sad path-no fragment matched' do
+    get '/api/v1/merchants/find?name=abcd'
+
+    json = JSON.parse(response.body, symbolize_names: true)
+    expect(json).to be_an(Object)
+  end
   it 'sad path-no fragment given'
 end

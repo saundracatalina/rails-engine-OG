@@ -61,5 +61,18 @@ describe Merchant, type: :model do
         expect(data).to eq([merchant_3, merchant_4])
       end
     end
+    describe 'merch_search' do
+      it 'can search for a merchant with a fragment of a name' do
+        merchant_1 = Merchant.create!(name: "TuRing")
+        merchant_2 = Merchant.create!(name: "The Ring")
+        search_fragment = "rIng"
+        key = "name"
+
+        data = Merchant.merch_search(key, search_fragment)
+
+        expect(data).to eq(merchant_1)
+        expect(data).to_not eq(merchant_2)
+      end
+    end
   end
 end

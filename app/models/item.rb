@@ -13,4 +13,8 @@ class Item < ApplicationRecord
 
     limit(items_per_page).offset(items_per_page * page_num)
   end
+
+  def self.item_search(name_key, search_fragment)
+    where("LOWER(#{name_key}) LIKE LOWER('%#{search_fragment}%')")
+  end
 end

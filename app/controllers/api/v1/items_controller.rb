@@ -26,13 +26,25 @@ class Api::V1::ItemsController< ApplicationController
       render json: {error: error.to_s}, status: :not_found
     end
   end
-  
+
   def destroy
     Item.destroy(params[:id])
+  end
+
+  def find_all
+    render json: ItemSerializer.new(Item.item_search(name_key, search_fragment))
   end
 
   private
   def item_params
     params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
+  end
+
+  def name_key
+    params.keys[0]
+  end
+
+  def search_fragment
+    params[:name]
   end
 end

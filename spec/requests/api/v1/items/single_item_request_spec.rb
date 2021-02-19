@@ -26,13 +26,13 @@ describe 'Items', type: :request do
     expect(item[:attributes][:merchant_id]).to be_an(Integer)
   end
   it 'fails with 404 if item does not exist' do
-    get api_v1_merchant_path(999999)
+    get api_v1_item_path(999999)
 
     expect(response.status).to eq(404)
   end
   it 'fails with 404 if item id sent as string' do
     item_id = create(:item).id
-    get api_v1_merchant_path("item_id")
+    get api_v1_item_path("item_id")
 
     expect(response.status).to eq(404)
   end

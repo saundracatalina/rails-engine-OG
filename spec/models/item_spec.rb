@@ -61,5 +61,21 @@ describe Item, type: :model do
         expect(data).to eq([item_3, item_4])
       end
     end
+    describe 'item_search' do
+      it "can search for an item with a fragment of a name" do
+        item_1 = create(:item, name: "FuN")
+        item_2 = create(:item, name: "FunHouse")
+        item_3 = create(:item, name: "house")
+        search_fragment = "fUn"
+        key = "name"
+
+        data = Item.item_search(key, search_fragment)
+
+        expect(data.length).to eq(2)
+        expect(data[0]).to eq(item_1)
+        expect(data[1]).to eq(item_2)
+        expect(data).to_not include(item_3)
+      end
+    end
   end
 end

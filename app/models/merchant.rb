@@ -13,4 +13,8 @@ class Merchant < ApplicationRecord
 
     limit(merchants_per_page).offset(merchants_per_page * page_num)
   end
+
+  def self.merch_search(name_key, search_fragment)
+    find_by("LOWER(#{name_key}) LIKE LOWER('%#{search_fragment}%')")
+  end
 end

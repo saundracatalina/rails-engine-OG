@@ -6,7 +6,7 @@ Rails Engine was a 7 day project for Turing School of Software & Design's Backen
 ## README Content
 - [Getting Started](#getting-started)
 - [Endpoints](#endpoints)
-- [Testing](#testing)
+- [Testing](#testing-tools-utilized)
 - [Database Schema](#database-schema)
 - [Author](#author)
 

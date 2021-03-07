@@ -1,7 +1,7 @@
 # Rails Engine  
 
 ## Overview  
-Rails Engine was a 7 day project for Turing School of Software & Design's Backend Program. It is meant to simulate building and exposing an API that a frontend could consume for a fictitious E-Commerce Application.  
+Rails Engine was a 7 day project for Turing School of Software & Design's Backend Program. It is solely a backend application built to expose API end points that a frontend could consume for a fictitious E-Commerce Application.  
 
 ## README Content
 - [Getting Started](#getting-started)
@@ -12,9 +12,9 @@ Rails Engine was a 7 day project for Turing School of Software & Design's Backen
 
 ## Getting Started  
 ```  
-$ git clone git@github.com:leahriffell/rails_engine.git  
+$ git clone git@github.com:saundracatalina/rails-engine.git  
 (or fork from that repo and clone your own fork)  
-$ cd rails_engine  
+$ cd rails-engine  
 ```  
 
 ### Prerequisites  
